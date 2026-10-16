@@ -46,6 +46,27 @@ Java confere os tipos **antes** de rodar. Analogia: um formulário que não deix
 - `private` + métodos públicos = caixa eletrônico: você não mexe no cofre direto, usa as operações permitidas, que validam.
 - Benefício: garante regras (valor nunca negativo) num lugar só.
 
+## Object, herança mínima, `@Override` e `toString()`
+> Tópico que costuma travar: o aluno acerta as previsões mas se perde na hora de **escrever** o `toString`. Motivo: o passo junta 4 ideias novas de uma vez (herança, sobrescrever, assinatura exata, `return` de String). **Separe em etapas** (ver Fase 3 no `roadmap.md`) e explique o "por que `return` e não `println`" **antes** de pedir o código, não como pergunta surpresa depois.
+
+1. **Provocar primeiro**: `System.out.println(t1);` sem `toString` → `Tarefa@29176cc1`. Pergunte antes de rodar: "o que vai sair?". Esse texto vem de algum lugar: o `println` chama `t1.toString()`, que a `Tarefa` **herdou**.
+2. **Herança mínima, fora do projeto** (o aluno ainda não viu `extends`): `class Cachorro extends Animal` = o filho **recebe tudo** da mãe (herda a casa) e pode **reformar um cômodo** (sobrescrever um método). Exemplo que funcionou:
+   ```java
+   class Animal   { String som() { return "..."; } }
+   class Cachorro extends Animal { @Override String som() { return "Au au!"; } }
+   class Peixe    extends Animal { }   // herda e NÃO reforma
+   ```
+   **Regra da busca**: o Java procura o método **na classe do objeto**; se não acha, **sobe para a mãe**. `new Cachorro().som()` → `Au au!`; `new Peixe().som()` → `...`. Peça para o aluno prever as duas saídas.
+3. **`@Override` = pedido de conferência**, não é ele que sobrescreve. Mostre o erro de digitação: `String Som()` **sem** `@Override` compila calado (vira método novo, o bug passa despercebido); **com** `@Override` → `does not override or implement a method from a supertype`. Por isso o mercado usa `@Override` sempre.
+4. **Ligar ao projeto**: toda classe sem `extends` herda de **`Object`** (a "mãe de todas"). Tabela de paralelo: `Animal`→`Object`, `som()`→`toString()`, `Peixe` (não reformou)→`Tarefa` hoje (por isso o `Classe@hash`). O número depois do `@` vem do endereço na memória e muda a cada execução.
+5. **Por que `return` e não `println`** (explicar antes de pedir o código):
+   - a assinatura do `Object` promete **devolver** uma `String` → sem `return` dá `missing return statement`;
+   - quem chama decide o que fazer com o texto (imprimir, montar outra String, gravar em arquivo, mandar para a web). Analogia SQL: um `SELECT` **devolve** linhas; quem chamou decide se mostra, exporta ou grava. Conecte a algo que o aluno já fez: "calcular" (return) separado de "mostrar" (println);
+   - **o `+` com objeto também chama `toString()`**: `"Pendente: " + t2` → `Pendente: [ ] Fazer o README`. Ótimo para conferir se entendeu.
+6. **Assinatura exata**: `public String toString()`, sem parâmetros. `public` é obrigatório porque não se pode **reduzir** o acesso herdado (sem ele: `attempting to assign weaker access privileges; was public`).
+- Armadilhas: `tostring`/`ToString` sem `@Override` (compila, nunca é chamado); imprimir dentro do `toString`; `"..." + this` dentro do próprio `toString` → chama a si mesmo infinitamente → `StackOverflowError`.
+- Analogia extra se ainda não clicar: o `Object` tem uma "ficha de apresentação" padrão e genérica (`Tarefa@29176cc1`, como um crachá só com o número do funcionário); o `toString` próprio é preencher o crachá com nome e situação.
+
 ## static
 - `static` = pertence à **classe**, não a cada objeto. Analogia: o regulamento do condomínio (um só, compartilhado) vs o apartamento de cada morador.
 - Por que `main` é `static`: a JVM precisa chamá-lo sem ter criado nenhum objeto antes.

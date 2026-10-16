@@ -48,11 +48,17 @@ Fase 10:    projeto Spring Boot (gerado pelo start.spring.io)
 **Checkpoint**: quando usar `for` vs `while`; o que é escopo; prever a saída de um loop; desafio: validar que a opção digitada existe e repetir a pergunta se não existir.
 
 ## Fase 3 — Orientação a objetos: classes e objetos
-**Conceitos**: classe vs objeto (forma de bolo vs bolo); atributos; construtor; `new`; `this`; métodos de instância; encapsulamento (`private` + getters); `toString()`; `record`; `enum`; referências (variável guarda o "endereço" do objeto); `static` explicado de verdade.
+**Conceitos**: classe vs objeto (forma de bolo vs bolo); atributos; construtor; `new`; `this`; métodos de instância; encapsulamento (`private` + getters); herança mínima para entender `Object` (`extends`, sobrescrever, `@Override`); `toString()`; `record`; `enum`; referências (variável guarda o "endereço" do objeto); `static` explicado de verdade.
 **Passos**
 1. Criar `Gasto.java` com descrição, valor e data (`LocalDate`); construtor; criar objetos no `main`.
 2. Encapsular: atributos `private`, getters, validação no construtor (valor > 0).
-3. `toString()` para imprimir bonito.
+3. `toString()` para imprimir bonito. **Dividir em sub-passos** (tópico que trava; roteiro detalhado em `concepts.md` → "Object, herança mínima, `@Override` e `toString()`"):
+   a. Prever e rodar `System.out.println(gasto)` sem `toString` → `Gasto@1b6d3586`.
+   b. Herança mínima **fora do projeto** (Animal/Cachorro/Peixe): prever saídas; regra "procura no filho, depois sobe para a mãe".
+   c. `@Override` como conferência: errar o nome com e sem a anotação.
+   d. Explicar **por que `return` e não `println`** (antes de pedir o código).
+   e. Primeiro `toString` de **1 linha** (`return descricao;`) → rodar e ver a mudança. Só depois acrescentar a formatação/`if`.
+   f. Conferir: prever `"Texto: " + gasto` (o `+` também chama `toString`).
 4. `enum Categoria { MERCADO, TRANSPORTE, LAZER, ... }` e usar no `Gasto`.
 5. Reescrever `Gasto` como `record` e comparar (quando usar cada um).
 6. Raio-X: stack vs heap — duas variáveis apontando para o mesmo objeto; `==` vs `.equals()`.

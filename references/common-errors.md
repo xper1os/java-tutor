@@ -25,6 +25,8 @@ Importante: o compilador às vezes acusa a linha **seguinte** à do erro real (e
 | `'else' without 'if'` | `else` solto | `;` depois do `if (...)` ou chaves erradas |
 | `unclosed string literal` | aspas não fechadas | `"Olá` |
 | `bad operand types for binary operator` | operação sem sentido entre tipos | `"a" - 1`, `&&` com números |
+| `tostring() in X does not override or implement a method from a supertype` | o `@Override` não achou esse método na classe mãe | nome digitado errado (`tostring`, `ToString`) ou parâmetros diferentes. **Sem** `@Override` o mesmo erro compila calado e o método nunca é chamado |
+| `toString() in X cannot override toString() in Object` + `attempting to assign weaker access privileges; was public` | sobrescreveu reduzindo o acesso | faltou `public` no `toString()` (quem sobrescreve não pode restringir o acesso herdado) |
 | `X is not abstract and does not override abstract method Y` | a classe não cumpriu o contrato da interface | faltou implementar um método da interface |
 
 ## Erros de execução (exceções)
@@ -38,7 +40,7 @@ Importante: o compilador às vezes acusa a linha **seguinte** à do erro real (e
 | `ArithmeticException: / by zero` | divisão inteira por zero | média de lista vazia |
 | `ConcurrentModificationException` | lista alterada enquanto era percorrida | `remove` dentro de for-each → use `removeIf` ou `Iterator` |
 | `ClassCastException` | conversão de tipo impossível | cast forçado errado |
-| `StackOverflowError` | pilha de chamadas estourou | recursão sem fim (método chamando a si mesmo, ou `toString` chamando `toString`) |
+| `StackOverflowError` | pilha de chamadas estourou | recursão sem fim (método chamando a si mesmo, ou `toString` chamando `toString`, ex.: `return "Tarefa: " + this;` dentro do próprio `toString`) |
 | `NoSuchFileException` | arquivo não encontrado | caminho relativo errado — o caminho é relativo à pasta **de onde** o `java` foi executado |
 | `IllegalArgumentException` | argumento inválido | geralmente lançado de propósito pela validação dele (bom sinal!) |
 
