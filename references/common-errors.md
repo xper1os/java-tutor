@@ -13,7 +13,7 @@ Importante: o compilador às vezes acusa a linha **seguinte** à do erro real (e
 |---|---|---|
 | `';' expected` | faltou ponto e vírgula | fim de instrução sem `;` (olhe a linha anterior também) |
 | `cannot find symbol` | "não conheço esse nome" | erro de digitação, variável fora do escopo, falta `import`, maiúscula/minúscula (`string` vs `String`) |
-| `incompatible types: X cannot be converted to Y` | tipos não combinam | `int x = "5";`, método retornando tipo errado, `double` em `int` sem conversão |
+| `incompatible types: X cannot be converted to Y` | tipos não combinam | `int x = "5";`, método retornando tipo errado, `double` em `int` sem conversão, `int x = null;` (`<null> cannot be converted to int` — primitivo não aceita `null`; use `Integer` se precisar de "sem valor") |
 | `possible lossy conversion from double to int` | vai perder casas decimais | `int total = 10.5;` → use `double` ou converta com `(int)` conscientemente |
 | `missing return statement` | o método promete devolver algo e algum caminho não devolve | `return` só dentro do `if`, sem `else` |
 | `non-static method X cannot be referenced from a static context` | o `main` (static) tentou usar algo de objeto | chamar método de instância direto no `main` → tornar `static` ou criar um objeto |

@@ -19,6 +19,7 @@ Formato padrão de explicação (máx. ~15 linhas):
 - Variável = caixa com etiqueta (nome) e formato (tipo). `int idade = 30;`
 - Primitivos: `int`, `long`, `double`, `boolean`, `char` — guardam o **valor** direto.
 - `String` (e todo objeto) — a variável guarda uma **referência** (o "endereço") do objeto.
+- **`null` só existe para classes.** `null` = "não aponta para nenhum objeto". `String nome = null;` compila; `int total = null;` **não** (`incompatible types: <null> cannot be converted to int`) — primitivo sempre tem um valor (atributo `int` não inicializado vale `0`, `boolean` vale `false`, objeto vale `null`). Cada primitivo tem sua **classe empacotadora** (*wrapper*), que aceita `null`: `int`→`Integer`, `double`→`Double`, `boolean`→`Boolean`, `char`→`Character`, `long`→`Long`. Analogia SQL: primitivo = coluna `NOT NULL`; classe = coluna que aceita `NULL`. Consequência prática: ao validar um parâmetro `String`, testar `== null` **antes** de chamar método nele (`titulo == null || titulo.isBlank()`), senão `NullPointerException`. (Mais tarde: *autoboxing* — `Integer x = null; int y = x;` compila e quebra com NPE ao rodar; listas só guardam classes: `List<Integer>`, nunca `List<int>`.)
 - `var` deixa o compilador deduzir o tipo, mas o tipo continua fixo: `var x = 10; x = "oi";` não compila.
 - Armadilhas: `5 / 2` é `2` (divisão inteira); `0.1 + 0.2` não é exatamente `0.3` (para dinheiro "de verdade" use `BigDecimal` — mencione na Fase 3+, não exija antes).
 
